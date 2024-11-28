@@ -1,0 +1,308 @@
+basePath: /api
+definitions:
+  models.EditSongRequest:
+    properties:
+      group:
+        type: string
+      link:
+        type: string
+      release_date:
+        type: string
+      song:
+        type: string
+      verse:
+        $ref: '#/definitions/models.VerseToUpdate'
+    type: object
+  models.ErrorResponse:
+    properties:
+      msg:
+        type: string
+    type: object
+  models.GetSongVerseResponse:
+    properties:
+      page:
+        type: integer
+      total_verse_count:
+        type: integer
+      verses:
+        items:
+          $ref: '#/definitions/models.Verse'
+        type: array
+    type: object
+  models.GetSongsResponse:
+    properties:
+      page:
+        type: integer
+      songs:
+        items:
+          $ref: '#/definitions/models.Song'
+        type: array
+      total_song_count:
+        type: integer
+    type: object
+  models.NewSongRequest:
+    properties:
+      group:
+        type: string
+      song:
+        type: string
+    type: object
+  models.NewSongResponse:
+    properties:
+      message:
+        type: string
+      song_id:
+        type: integer
+    type: object
+  models.Song:
+    properties:
+      created_at:
+        type: string
+      group_name:
+        type: string
+      id:
+        type: integer
+      link:
+        type: string
+      releaseDate:
+        type: string
+      song_name:
+        type: string
+      text:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.SuccessResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+    type: object
+  models.Verse:
+    properties:
+      id:
+        type: integer
+      index:
+        type: integer
+      song_id:
+        type: integer
+      text:
+        type: string
+    type: object
+  models.VerseToUpdate:
+    properties:
+      index:
+        type: integer
+      text:
+        type: string
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:8080
+info:
+  contact: {}
+  description: Music library example.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /songs:
+    get:
+      consumes:
+      - application/json
+      description: Get songs by group and song with pagination, default pagination
+        value will be 3
+      parameters:
+      - description: page number in pagination
+        in: query
+        name: group
+        type: string
+      - description: number of elements in one page
+        in: query
+        name: song
+        type: string
+      - description: page number in pagination
+        in: query
+        name: page
+        type: integer
+      - description: number of elements in one page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetSongsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get songs
+      tags:
+      - Song
+    post:
+      consumes:
+      - application/json
+      description: Adding a new song if it is not already existing one
+      parameters:
+      - description: song information to add
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/models.NewSongRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.NewSongResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Adding a new song
+      tags:
+      - Song
+  /songs/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Remove song from music library by song id
+      parameters:
+      - description: song id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Remove song from music library
+      tags:
+      - Song
+    patch:
+      consumes:
+      - application/json
+      description: Update song properties by song id
+      parameters:
+      - description: Song field(s) need to be updated
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/models.EditSongRequest'
+      - description: Song id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Song successfully updated
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Update song
+      tags:
+      - Song
+  /songs/{id}/verses:
+    get:
+      consumes:
+      - application/json
+      description: Get verses of song with pagination, default pagination value will
+        be 3
+      parameters:
+      - description: song id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: page number in pagination
+        in: query
+        name: page
+        type: integer
+      - description: number of elements in one page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetSongVerseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get verses of song
+      tags:
+      - Song
+swagger: "2.0"
