@@ -2,7 +2,7 @@ package song
 
 import (
 	"context"
-	"music-library/internal/models"
+	"github.com/LionJr/music-library/internal/models"
 )
 
 type Repo interface {

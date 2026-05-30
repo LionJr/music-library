@@ -11,10 +11,10 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"go.uber.org/zap"
 
-	"music-library/config"
-	"music-library/internal/service/song"
+	"github.com/LionJr/music-library/config"
+	"github.com/LionJr/music-library/internal/service/song"
 
-	_ "music-library/docs"
+	_ "github.com/LionJr/music-library/docs"
 )
 
 type Server struct {

@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/LionJr/music-library/internal/models"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"music-library/internal/models"
 )
 
 // Add                     godoc

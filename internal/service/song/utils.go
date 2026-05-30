@@ -1,8 +1,8 @@
 package song
 
 import (
+	"github.com/LionJr/music-library/internal/models"
 	"github.com/gin-gonic/gin"
-	"music-library/internal/models"
 	"regexp"
 )
 

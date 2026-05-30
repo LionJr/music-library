@@ -6,7 +6,7 @@ import (
 
 	"github.com/chapsuk/grace"
 
-	"music-library/internal/app"
+	"github.com/LionJr/music-library/internal/app"
 )
 
 // @title           Swagger Example API

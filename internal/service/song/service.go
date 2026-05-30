@@ -1,8 +1,8 @@
 package song
 
 import (
+	"github.com/LionJr/music-library/config"
 	"go.uber.org/zap"
-	"music-library/config"
 )
 
 type Service struct {

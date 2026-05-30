@@ -8,11 +8,11 @@ import (
 	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
-	"music-library/config"
-	"music-library/db"
-	"music-library/internal/app/http/server"
-	"music-library/internal/repository/postgres"
-	"music-library/internal/service/song"
+	"github.com/LionJr/music-library/config"
+	"github.com/LionJr/music-library/db"
+	"github.com/LionJr/music-library/internal/app/http/server"
+	"github.com/LionJr/music-library/internal/repository/postgres"
+	"github.com/LionJr/music-library/internal/service/song"
 )
 
 const shutdownTimeout = 15 * time.Second

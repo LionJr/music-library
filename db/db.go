@@ -5,12 +5,12 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/LionJr/music-library/config"
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/jmoiron/sqlx"
-	"music-library/config"
 )
 
 func NewDB(ctx context.Context, cfg *config.Postgres) (*sqlx.DB, error) {
