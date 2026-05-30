@@ -1,12 +1,13 @@
 package song
 
 import (
+	"encoding/json"
 	"fmt"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
-	jsoniter "github.com/json-iterator/go"
 	"go.uber.org/zap"
 	"music-library/internal/models"
-	"net/http"
 )
 
 // Add                     godoc
@@ -42,7 +43,7 @@ func (s *Service) Add(ctx *gin.Context) {
 	defer songInfoResp.Body.Close()
 
 	var song models.Song
-	if err = jsoniter.NewDecoder(songInfoResp.Body).Decode(&song); err != nil {
+	if err = json.NewDecoder(songInfoResp.Body).Decode(&song); err != nil {
 		s.Logger.Info("song.Add: parse api response error", zap.Error(err))
 		sendErrorResponse(ctx, "internal server error", http.StatusInternalServerError)
 		return
